@@ -1,0 +1,182 @@
+Sub MLA()
+'
+' MLA Macro: Creates a new MLA formatted paper.
+'
+'
+sLastName = InputBox("Last Name:", "MLA")
+sFirstName = InputBox("First Name:", "MLA")
+sProfLastName = InputBox("Professor's Last Name:", "MLA")
+sPrefix = InputBox("Professor Prefix(Mr, Ms, Mrs):", "MLA")
+sCourseInfo = InputBox("Type Course Info:", "MLA", "ENGL 1301")
+sDate = InputBox("Type Date as you'd like it to appear:", "MLA", Date)
+sTitle = InputBox("Type your Title(if you already have one):", "MLA", "Insert Title Here")
+
+'exp1 begins here
+    Selection.WholeStory
+    Selection.TypeBackspace
+    ActiveWindow.ActivePane.View.SeekView = wdSeekCurrentPageHeader
+    Selection.WholeStory
+    Selection.TypeBackspace
+    Selection.EscapeKey
+'Adding page numbers
+    With ActiveDocument.Sections(1)
+    .Footers(wdHeaderFooterPrimary).PageNumbers.Add _
+    PageNumberAlignment:=wdAlignPageNumberRight, _
+    FirstPage:=True
+    End With
+    ActiveWindow.ActivePane.View.SeekView = wdSeekMainDocument
+    
+' Page Deleted, Beginning to Format
+    Selection.TypeText Text:="*fname* *lname*"
+    Selection.TypeParagraph
+    Selection.TypeText Text:="*prefix* *proflname*"
+    Selection.TypeParagraph
+    Selection.TypeText Text:="*coursenumber*"
+    Selection.TypeParagraph
+    Selection.TypeText Text:="*date*"
+    Selection.TypeParagraph
+    Selection.ParagraphFormat.Alignment = wdAlignParagraphCenter
+    Selection.TypeText Text:="*title*"
+    Selection.TypeParagraph
+    Selection.ParagraphFormat.Reset
+    Selection.TypeText Text:=vbTab
+    If ActiveWindow.View.SplitSpecial <> wdPaneNone Then
+        ActiveWindow.Panes(2).Close
+    End If
+    If ActiveWindow.ActivePane.View.Type = wdNormalView Or ActiveWindow. _
+        ActivePane.View.Type = wdOutlineView Then
+        ActiveWindow.ActivePane.View.Type = wdPrintView
+    End If
+    ActiveWindow.ActivePane.View.SeekView = wdSeekCurrentPageHeader
+'Input Header Settings
+
+    SendKeys ("{TAB} {TAB}")
+    Selection.ParagraphFormat.Alignment = wdAlignParagraphRight
+    Selection.TypeText (sLastName)
+    Selection.HeaderFooter.PageNumbers.Add
+'End Header Settings
+    If ActiveWindow.View.SplitSpecial <> wdPaneNone Then
+        ActiveWindow.Panes(2).Close
+    End If
+    If ActiveWindow.ActivePane.View.Type = wdNormalView Or ActiveWindow. _
+        ActivePane.View.Type = wdOutlineView Then
+        ActiveWindow.ActivePane.View.Type = wdPrintView
+    End If
+    ActiveWindow.ActivePane.View.SeekView = wdSeekCurrentPageHeader
+    Selection.EscapeKey
+'Begin Replacement Process
+'First Name
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*fname*"
+        .Replacement.Text = sFirstName
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Last Name
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*lname*"
+        .Replacement.Text = sLastName
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Professor's Last Name
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*proflname*"
+        .Replacement.Text = sProfLastName
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Professor's Prefix
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*prefix*"
+        .Replacement.Text = sPrefix
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Course Info
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*coursenumber*"
+        .Replacement.Text = sCourseInfo
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Date
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*date*"
+        .Replacement.Text = sDate
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Title
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "*title*"
+        .Replacement.Text = sTitle
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute Replace:=wdReplaceAll
+'Success Message
+    MsgBox ("Paper Formatted Correctly! Success!")
+End Sub
